@@ -1,15 +1,23 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
+<<<<<<< HEAD
       {{'PAGE.TRAINING-LIST' | translate}} ({{trainingList.length}})
+=======
+      {{'PAGE.TRAINING-LIST' | translate}}
+>>>>>>> 494e973b906bb03821575ac5d5c34be6fc1fc7c0
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+<<<<<<< HEAD
   <app-training-list-item *ngFor="let training of trainingList" [training]="training"></app-training-list-item>
   <form novalidate [formGroup]="newTrainingForm" *ngIf="newTrainingCreationning" (ngSubmit)="addTraining()">
     <input type="text" formControlName="titleControl">
   </form>
   <ion-icon class=" button-add" name="add-circle" (click)="openAddTraining()"></ion-icon>
+=======
+  <ion-icon class="button-add" name="add-circle"></ion-icon>
+>>>>>>> 494e973b906bb03821575ac5d5c34be6fc1fc7c0
 </ion-content>
