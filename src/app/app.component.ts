@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Store } from '@ngrx/store';
 import { TrainingListMock } from './core/mocks/training-list.mocks';
+import { AddUserAction } from './core/store/user/user.action';
+import { UserMock } from './core/mocks/user.mocks';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +29,7 @@ export class AppComponent {
       for (const training of TrainingListMock) {
         this.store.dispatch(new AddTrainingAction(training));
       }
+      this.store.dispatch(new AddUserAction(UserMock));
       this.splashScreen.hide();
     });
   }
