@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import { TrainingModel } from 'src/app/core/models/training.model';
 import { AddTrainingAction } from 'src/app/core/store/training-list/training-list.action';
