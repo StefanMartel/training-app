@@ -1,12 +1,18 @@
+import { Injectable } from "@angular/core";
+
 export enum urlGroupEnum {
     'TRAINING' = 'training'
 }
 
-
+@Injectable({
+    providedIn: 'root'
+  })
 export class UrlConfiguration {
 
     public backEndUrlList: {} = {
-        'getTrainingListByUser': `${urlGroupEnum.TRAINING}/{user}`
+        'getTrainingListByUser': `api/${urlGroupEnum.TRAINING}/{user}/list`,
+        'addTraining': `api/${urlGroupEnum.TRAINING}/add`,
+        'deleteTrainingByTrainingId': `api/${urlGroupEnum.TRAINING}/{trainingId}/delete`,
     };
 
     /**
@@ -24,7 +30,7 @@ export class UrlConfiguration {
         for (let i = 0; i < params.length; i++) {
             urlToModify = urlToModify.replace(regexToReplace, params[i]);
         }
-        return `/${urlToModify}`;
+        return urlToModify;
     }
 
 }

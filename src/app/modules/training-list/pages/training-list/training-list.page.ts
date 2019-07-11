@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 
 import { TrainingModel } from 'src/app/core/models/training.model';
-import { AddTrainingAction } from 'src/app/core/store/training-list/training-list.action';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TrainingService } from 'src/app/core/services/training-list.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-training-list',
@@ -13,19 +12,19 @@ import { TrainingService } from 'src/app/core/services/training-list.service';
 })
 export class TrainingListPage implements OnInit {
 
-  trainingList: TrainingModel[];
-  newTrainingCreationning = false;
+  trainingList$: Observable<TrainingModel[]>;
+
+  newTrainingCreating = false;
   newTrainingForm: FormGroup;
 
+  newTrainingValue: string;
+
   constructor(
-    private store: Store<any>,
     private formBuilder: FormBuilder,
     private trainingService: TrainingService
   ) {
     this.initForm();
-    this.trainingService.getTrainingList().subscribe( data =>
-      this.trainingList = data
-    ); 
+      this.trainingList$ = this.trainingService.getTrainingList();
   }
 
   ngOnInit() {
@@ -42,18 +41,26 @@ export class TrainingListPage implements OnInit {
   }
 
   openAddTraining() {
-    this.newTrainingCreationning = true;
+    this.newTrainingCreating = true;
+  }
+
+  closeAddTraining(){
+    this.newTrainingCreating = false;
   }
 
   addTraining() {
-    if (this.newTrainingForm.valid) {
-      this.store.dispatch(new AddTrainingAction({
-        id: 4,
-        title: this.newTrainingForm.controls['titleControl'].value,
-        creationDate: new Date()
-      }));
-      this.newTrainingForm.reset();
-      this.newTrainingCreationning = false;
+    if (this.newTrainingValue != '') {
+      this.trainingService.addTraining(this.newTrainingValue);
+      this.clearNewValue();
+      this.closeAddTraining();
     }
+  }
+
+  clearNewValue(){
+    this.newTrainingValue='';
+  }
+
+  deleteTraining(trainingId: number){
+    this.trainingService.deleteTraining(trainingId);
   }
 }

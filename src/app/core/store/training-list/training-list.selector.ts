@@ -4,7 +4,16 @@ import { createSelector } from '@ngrx/store';
 export const selectTrainingListState = (state) => state.trainingReducer;
 
 // Et à partir de celle-ci, on créer une autre fonction qui renverra data
-export const selectTrainingById = createSelector(selectTrainingListState, (trainings) => trainings);
+export const selectTrainingById = createSelector(selectTrainingListState, 
+    (trainings) => trainings.filter((training)=> training.id = 3)
+);
 
 // Et à partir de celle-ci, on créer une autre fonction qui renverra data
-export const selectTrainings = createSelector(selectTrainingListState, (trainings) => trainings);
+export const selectTrainings = createSelector(selectTrainingListState, (trainings) => trainings.trainings);
+
+
+export const maxTrainingId = createSelector(selectTrainingListState, (trainings) => {
+    return trainings.trainings.reduce( (max, value) => {
+        return ( value.id > max ? value.id : max );
+      }, 0);
+});

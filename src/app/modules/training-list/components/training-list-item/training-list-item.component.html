@@ -1,3 +1,4 @@
-<p>
-  {{training.title}}
-</p>
+<mat-list-item mat-ripple>
+    <h4 mat-line>{{training.title}}</h4>
+    <mat-icon color="warn" (click)="deleteTraining(training.id)">remove_circle</mat-icon>
+ </mat-list-item>

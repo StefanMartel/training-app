@@ -1,24 +1,48 @@
 import { Action } from '@ngrx/store';
+import { TrainingModel } from '../../models/training.model';
 
 export enum TrainingListActionTypes {
-    SHOW_TRAINING_LIST = 'Training list show Request',
+    GET_TRAINING_LIST= 'Training list get Request',
+    GET_TRAINING_LIST_COMPLETED = 'Training list get completed',
     ADD_TRAINING = 'Training list add Request',
-    DELETE_TRAINING = 'Training list delete Request'
+    ADD_TRAINING_COMPLETED = 'Training list add completed',
+    DELETE_TRAINING = 'Training delete Request',
+    DELETE_TRAINING_COMPLETED = 'Training delete completed'
 }
 
-export class ShowTrainingListAction implements Action {
-    readonly type = TrainingListActionTypes.SHOW_TRAINING_LIST;
-    constructor(public payload: any) { }
+export class GetTrainingListAction implements Action {
+    readonly type = TrainingListActionTypes.GET_TRAINING_LIST;
+    constructor(public userLogin: string) { }
+}
+
+export class GetTrainingListCompletedAction implements Action {
+    readonly type = TrainingListActionTypes.GET_TRAINING_LIST_COMPLETED;
+    constructor(public trainings: Array<TrainingModel>) { }
 }
 
 export class AddTrainingAction implements Action {
     readonly type = TrainingListActionTypes.ADD_TRAINING;
-    constructor(public payload: any) { }
+    constructor(public training: TrainingModel) { }
+}
+
+export class AddTrainingCompletedAction implements Action {
+    readonly type = TrainingListActionTypes.ADD_TRAINING_COMPLETED;
 }
 
 export class DeleteTrainingAction implements Action {
     readonly type = TrainingListActionTypes.DELETE_TRAINING;
-    constructor(public payload: any) { }
+    constructor(public trainingId: number) { }
 }
 
-export type TrainingListActions = ShowTrainingListAction | AddTrainingAction | DeleteTrainingAction;
+export class DeleteTrainingCompletedAction implements Action {
+    readonly type = TrainingListActionTypes.DELETE_TRAINING_COMPLETED;
+}
+
+export type TrainingListActions = 
+    GetTrainingListAction | 
+    GetTrainingListCompletedAction |
+    AddTrainingAction | 
+    AddTrainingCompletedAction |
+    DeleteTrainingAction |
+    DeleteTrainingCompletedAction
+    ;
