@@ -8,14 +8,13 @@ export const featureAdapter: EntityAdapter<TrainingModel> = createEntityAdapter<
         b.creationDate.toString().localeCompare(a.creationDate.toString())
 });
 
-export interface State extends EntityState<TrainingModel> {
-    isLoading?: boolean;
-    error?: any;
+export interface TrainingState extends EntityState<TrainingModel>{
+    trainings: Array<TrainingModel>,
+    loading: boolean
 }
 
-export const initialState: State = featureAdapter.getInitialState(
-    {
-        isLoading: false,
-        error: null
-    }
-);
+export const initialState: TrainingState = featureAdapter.getInitialState(
+{
+    trainings : [],
+    loading: false
+});

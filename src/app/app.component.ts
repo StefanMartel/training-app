@@ -1,4 +1,4 @@
-import { AddTrainingAction } from './core/store/training-list/training-list.action';
+import { AddTrainingAction, GetTrainingListAction } from './core/store/training-list/training-list.action';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -27,9 +27,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.store.dispatch(new AddUserAction(UserMock));
-      for (const training of TrainingListMock) {
-        this.store.dispatch(new AddTrainingAction(training));
-      }
+      this.store.dispatch(new GetTrainingListAction(UserMock.login));
       this.splashScreen.hide();
     });
   }

@@ -1,17 +1,32 @@
 import { TrainingListActions, TrainingListActionTypes } from './training-list.action';
+import { TrainingState, initialState } from './training-list.state';
 
-
-export let initialState = [];
-
-export const trainingReducer = (state = initialState, action: TrainingListActions) => {
+export const trainingReducer = (state: TrainingState = initialState, action: TrainingListActions) => {
     switch (action.type) {
-        case TrainingListActionTypes.SHOW_TRAINING_LIST:
-            return state;
+        case TrainingListActionTypes.GET_TRAINING_LIST:
+            return {...state, 
+                    loading: true
+                };
+        case TrainingListActionTypes.GET_TRAINING_LIST_COMPLETED:
+            return {...state, 
+                    trainings: action.trainings,
+                    loading: false
+                };
         case TrainingListActionTypes.ADD_TRAINING:
-            return [...state, action.payload];
+            state.trainings.push(action.training)
+            return {...state, 
+                    trainings: state.trainings,
+                    loading: true
+                };
+        case TrainingListActionTypes.ADD_TRAINING_COMPLETED:
+        case TrainingListActionTypes.DELETE_TRAINING_COMPLETED:
+                return {...state, 
+                        loading: false
+                    };
         case TrainingListActionTypes.DELETE_TRAINING:
-            const product = action.payload;
-            return state.filter((el) => el.id !== product.id);
+            return {...state,
+                    trainings: state.trainings.filter((el) => el.id !== action.trainingId)
+            }
         default:
             return state;
     }

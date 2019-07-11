@@ -1,15 +1,31 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      {{'PAGE.TRAINING-LIST' | translate}} ({{trainingList.length}})
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-  <app-training-list-item *ngFor="let training of trainingList" [training]="training"></app-training-list-item>
-  <form novalidate [formGroup]="newTrainingForm" *ngIf="newTrainingCreationning" (ngSubmit)="addTraining()">
-    <input type="text" formControlName="titleControl">
-  </form>
-  <ion-icon class=" button-add" name="add-circle" (click)="openAddTraining()"></ion-icon>
-</ion-content>  
+    <ion-toolbar>
+      <ion-title>
+        {{'PAGE.TRAINING-LIST' | translate}} ({{(trainingList$ | async).length}})
+        <mat-icon class="button-add" (click)="openAddTraining()">add_circle</mat-icon>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <mat-list>
+      <app-training-list-item 
+        *ngFor="let training of trainingList$ | async" 
+        [training]="training"
+        (deleteTrainingId)="deleteTraining($event)">
+      </app-training-list-item>
+    </mat-list>
+  
+    <form (ngSubmit)="addTraining()" novalidate>
+      <mat-form-field class="example-form-field" *ngIf="newTrainingCreating">
+          <input matInput type="text" autofocus
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="newTrainingValue">
+          <button mat-button *ngIf="value" matSuffix mat-icon-button 
+            aria-label="Clear" 
+            (click)="clearNewValue()">
+            <mat-icon>close</mat-icon>
+          </button>
+      </mat-form-field>
+    </form>
+  </ion-content>  

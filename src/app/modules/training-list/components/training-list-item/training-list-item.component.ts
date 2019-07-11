@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { TrainingModel } from 'src/app/core/models/training.model';
 
@@ -11,9 +11,15 @@ export class TrainingListItemComponent implements OnInit {
 
   @Input() training: TrainingModel;
 
+  @Output() deleteTrainingId = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  deleteTraining(trainingId: number){
+    this.deleteTrainingId.emit(trainingId);
   }
 
 }

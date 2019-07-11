@@ -1,5 +1,5 @@
 export class TrainingModel {
-    login: string;
+    login?: string;
     id: number;
     title: string;
     creationDate: Date;
