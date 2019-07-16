@@ -1,5 +1,16 @@
 {
     "PAGE": {
         "TRAINING-LIST": "Liste de scéances"
+    },
+    "CONFIRM": {
+        "DELETE_TRAINING": "Êtes-vous sur de vouloir supprimer cette scéance ?",
+        "BUTTON": {
+            "OK": "Valider",
+            "CANCEL": "Annuler"
+        },
+        "ACTION": {
+            "DELETE": "{{objet}} supprimé(e) avec succés",
+            "ADD_TRAINING": "Scéance ajoutée avec succés"
+        }
     }
 }

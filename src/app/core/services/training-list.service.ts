@@ -14,7 +14,6 @@ export class TrainingService {
     ) {      
         this.store.select(maxTrainingId).subscribe(
             data=> {
-                console.log('maxId', data);
                 this.maxId=data
             }
         )
@@ -29,9 +28,10 @@ export class TrainingService {
     }
 
     addTraining(trainingLabel: string){
+        const tmpId = this.maxId +1;
         this.store.dispatch(new AddTrainingAction({
             login: 'SM',
-            id: this.maxId++,
+            id: this.maxId +1,
             title: trainingLabel,
             creationDate: new Date()
         }));
