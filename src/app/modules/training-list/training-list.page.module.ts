@@ -16,7 +16,10 @@ import { TrainingService } from 'src/app/core/services/training-list.service';
       }
     ])
   ],
-  declarations: [TrainingListPage, TrainingListItemComponent],
+  declarations: [
+    TrainingListPage, 
+    TrainingListItemComponent
+  ],
   providers: [
     TrainingService
   ]

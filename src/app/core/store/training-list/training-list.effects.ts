@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { TrainingListActionTypes, AddTrainingAction, GetTrainingListAction, GetTrainingListCompletedAction, AddTrainingCompletedAction, DeleteTrainingAction, DeleteTrainingCompletedAction } from './training-list.action';
-import { switchMap, map, tap } from 'rxjs/operators';
 import { HttpRepo } from '../../http/http';
 import { UrlConfiguration } from '../../http/configuration/url.configuration';
+import { TranslateService } from '@ngx-translate/core';
+
 
 
 @Injectable()
@@ -15,7 +18,9 @@ export class TrainingListEffects {
   constructor(
       private actions$: Actions,
       private httpRepo: HttpRepo,
-      private urlConfiguration: UrlConfiguration
+      private urlConfiguration: UrlConfiguration,
+      private snackBar: MatSnackBar,
+      private translate: TranslateService
     ) {}
 
   @Effect()
@@ -37,7 +42,8 @@ export class TrainingListEffects {
       switchMap((option: AddTrainingAction)=> {
         return this.httpRepo.httpCallPost(this.urlConfiguration.getBackEndUrl('addTraining'), option.training)
         .pipe(
-          map(() => {           
+          map(() => {     
+            this.snackBar.open(this.translate.instant('CONFIRM.ACTION.ADD_TRAINING'))      
             return new AddTrainingCompletedAction()
           })
         )
@@ -51,6 +57,7 @@ export class TrainingListEffects {
         return this.httpRepo.httpCallDelete(this.urlConfiguration.getBackEndUrl('deleteTrainingByTrainingId',[option.trainingId]))
         .pipe(
           map(() => {           
+            this.snackBar.open(this.translate.instant('CONFIRM.ACTION.DELETE', {'objet': 'Scéance'}))
             return new DeleteTrainingCompletedAction()
           })
         )
