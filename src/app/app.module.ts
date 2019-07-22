@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { trainingReducer } from './core/store/training-list/training-list.reducer';
+import { reducers } from './core/store/reducers/index';
 import { TrainingListEffects } from './core/store/training-list/training-list.effects';
 import { HttpRepo } from './core/http/http';
 
@@ -43,7 +44,7 @@ export function httpRepo (http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    StoreModule.forRoot({ trainingReducer }),
+    StoreModule.forRoot({ reducers }),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     }),

@@ -12,20 +12,21 @@ export const trainingReducer = (state: TrainingState = initialState, action: Tra
                     trainings: action.trainings,
                     loading: false
                 };
-        case TrainingListActionTypes.ADD_TRAINING:
+        case TrainingListActionTypes.ADD_TRAINING_COMPLETED:
             state.trainings.push(action.training)
             return {...state, 
                     trainings: state.trainings,
-                    loading: true
+                    loading: false
                 };
-        case TrainingListActionTypes.ADD_TRAINING_COMPLETED:
-        case TrainingListActionTypes.DELETE_TRAINING_COMPLETED:
-                return {...state, 
-                        loading: false
-                    };
+        case TrainingListActionTypes.ADD_TRAINING:
         case TrainingListActionTypes.DELETE_TRAINING:
+                return {...state, 
+                        loading: true
+                    };
+        case TrainingListActionTypes.DELETE_TRAINING_COMPLETED:
             return {...state,
-                    trainings: state.trainings.filter((el) => el.id !== action.trainingId)
+                    trainings: state.trainings.filter((el) => el.id !== action.trainingId),
+                    loading: false
             }
         default:
             return state;

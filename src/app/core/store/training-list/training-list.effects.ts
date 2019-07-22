@@ -5,10 +5,12 @@ import { switchMap, map } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { TrainingListActionTypes, AddTrainingAction, GetTrainingListAction, GetTrainingListCompletedAction, AddTrainingCompletedAction, DeleteTrainingAction, DeleteTrainingCompletedAction } from './training-list.action';
+import { TrainingListActionTypes, AddTrainingAction, GetTrainingListAction, GetTrainingListCompletedAction, AddTrainingCompletedAction, DeleteTrainingAction, DeleteTrainingCompletedAction, NoAction } from './training-list.action';
 import { HttpRepo } from '../../http/http';
 import { UrlConfiguration } from '../../http/configuration/url.configuration';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpResponse } from '@angular/common/http';
+import { TrainingService } from '../../services/training-list.service';
 
 
 
@@ -19,6 +21,7 @@ export class TrainingListEffects {
       private actions$: Actions,
       private httpRepo: HttpRepo,
       private urlConfiguration: UrlConfiguration,
+      private trainingService: TrainingService,
       private snackBar: MatSnackBar,
       private translate: TranslateService
     ) {}
@@ -27,10 +30,10 @@ export class TrainingListEffects {
   getTrainingList$: Observable<Action> = this.actions$.pipe(
       ofType(TrainingListActionTypes.GET_TRAINING_LIST),
       switchMap((option: GetTrainingListAction)=> {
-        return this.httpRepo.httpCallGet(this.urlConfiguration.getBackEndUrl('getTrainingListByUser', [option.userLogin]))
+        return this.trainingService.getTrainingListBack(option.userLogin)
         .pipe(
           map((trainings) => {           
-            return new GetTrainingListCompletedAction(trainings)
+            return new GetTrainingListCompletedAction(trainings.body)
           })
         )
       })
@@ -40,11 +43,16 @@ export class TrainingListEffects {
   addTraining$: Observable<Action> = this.actions$.pipe(
       ofType(TrainingListActionTypes.ADD_TRAINING),
       switchMap((option: AddTrainingAction)=> {
-        return this.httpRepo.httpCallPost(this.urlConfiguration.getBackEndUrl('addTraining'), option.training)
+        return this.trainingService.addTrainingBack(option.training)
         .pipe(
-          map(() => {     
-            this.snackBar.open(this.translate.instant('CONFIRM.ACTION.ADD_TRAINING'))      
-            return new AddTrainingCompletedAction()
+          map((dataReturn) => {  
+            if(dataReturn.status=='201'){   
+              this.snackBar.open(this.translate.instant('CONFIRM.ACTION.ADD_TRAINING'))     
+              return new AddTrainingCompletedAction(option.training);
+            } else{
+              this.snackBar.open(this.translate.instant('CONFIRM.ACTION.ADD_TRAINING_ERROR'))
+              return new NoAction();
+            }
           })
         )
       })
@@ -54,11 +62,16 @@ export class TrainingListEffects {
   deleteTraining$: Observable<Action> = this.actions$.pipe(
       ofType(TrainingListActionTypes.DELETE_TRAINING),
       switchMap((option: DeleteTrainingAction)=> {
-        return this.httpRepo.httpCallDelete(this.urlConfiguration.getBackEndUrl('deleteTrainingByTrainingId',[option.trainingId]))
+        return this.trainingService.deleteTrainingBack(option.trainingId)
         .pipe(
-          map(() => {           
-            this.snackBar.open(this.translate.instant('CONFIRM.ACTION.DELETE', {'objet': 'Scéance'}))
-            return new DeleteTrainingCompletedAction()
+          map((dataReturn) => {       
+            if(dataReturn.status=='204'){  
+              this.snackBar.open(this.translate.instant('CONFIRM.ACTION.DELETE', {'objet': 'Scéance'}))
+              return new DeleteTrainingCompletedAction(option.trainingId);
+            } else{
+              this.snackBar.open(this.translate.instant('CONFIRM.ACTION.DELETE_TRAINING_ERROR'))
+              return new NoAction();
+            }
           })
         )
       })

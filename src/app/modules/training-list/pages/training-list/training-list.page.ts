@@ -71,7 +71,6 @@ export class TrainingListPage {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        console.log('close', result)
         this.deleteConfirm$.next(true);
       }
     });
