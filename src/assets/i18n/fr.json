@@ -10,7 +10,9 @@
         },
         "ACTION": {
             "DELETE": "{{objet}} supprimé(e) avec succés",
-            "ADD_TRAINING": "Scéance ajoutée avec succés"
+            "DELETE_TRAINING_ERROR": "Erreur lors de la suppression de la scéance",
+            "ADD_TRAINING": "Scéance ajoutée avec succés",
+            "ADD_TRAINING_ERROR": "Erreur lors de l'ajout de la scéance"
         }
     }
 }

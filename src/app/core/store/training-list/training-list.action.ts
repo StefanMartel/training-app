@@ -7,7 +7,8 @@ export enum TrainingListActionTypes {
     ADD_TRAINING = 'Training list add Request',
     ADD_TRAINING_COMPLETED = 'Training list add completed',
     DELETE_TRAINING = 'Training delete Request',
-    DELETE_TRAINING_COMPLETED = 'Training delete completed'
+    DELETE_TRAINING_COMPLETED = 'Training delete completed',
+    NO_ACTION = 'Aucune action de faite (suite à erreur dans l/effect)'
 }
 
 export class GetTrainingListAction implements Action {
@@ -27,6 +28,7 @@ export class AddTrainingAction implements Action {
 
 export class AddTrainingCompletedAction implements Action {
     readonly type = TrainingListActionTypes.ADD_TRAINING_COMPLETED;
+    constructor(public training: TrainingModel) { }
 }
 
 export class DeleteTrainingAction implements Action {
@@ -36,6 +38,11 @@ export class DeleteTrainingAction implements Action {
 
 export class DeleteTrainingCompletedAction implements Action {
     readonly type = TrainingListActionTypes.DELETE_TRAINING_COMPLETED;
+    constructor(public trainingId: number) { }
+}
+
+export class NoAction implements Action{
+    readonly type = TrainingListActionTypes.NO_ACTION;
 }
 
 export type TrainingListActions = 
@@ -44,5 +51,6 @@ export type TrainingListActions =
     AddTrainingAction | 
     AddTrainingCompletedAction |
     DeleteTrainingAction |
-    DeleteTrainingCompletedAction
+    DeleteTrainingCompletedAction |
+    NoAction
     ;

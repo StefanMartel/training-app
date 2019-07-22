@@ -3,7 +3,7 @@ import { UserActions, UserActionTypes } from './user.action';
 
 export let initialState = [];
 
-export function reducer(state = initialState, action: UserActions) {
+export const userReducer = (state = initialState, action: UserActions) => {
     switch (action.type) {
         case UserActionTypes.SHOW_USER:
             return [...state, action.payload];

@@ -17,8 +17,8 @@ export class HttpRepo extends HttpErrors implements IHttp {
     }
 
 
-    httpCallPost(pathToCall: string, objToSend: any) {
-        return this.http.post(environment.backEndurl + ':' + environment.backEndPort +'/'+ pathToCall, objToSend, { headers: this.headers })
+    httpCallPost(pathToCall: string, objToSend: any): Observable<any> {
+        return this.http.post(environment.backEndurl + ':' + environment.backEndPort +'/'+ pathToCall, objToSend, { headers: this.headers, observe: 'response' })
             .pipe(
                 retry(3),
                 map(res => res),
@@ -27,7 +27,7 @@ export class HttpRepo extends HttpErrors implements IHttp {
     }
 
     httpCallGet(pathToCall: string): Observable<any> {
-        return this.http.get(environment.backEndurl + ':' + environment.backEndPort +'/'+ pathToCall, { headers: this.headers })
+        return this.http.get(environment.backEndurl + ':' + environment.backEndPort +'/'+ pathToCall, { headers: this.headers, observe: 'response' })
             .pipe(
                 retry(3),
                 map(res => res),
@@ -36,7 +36,7 @@ export class HttpRepo extends HttpErrors implements IHttp {
     }
 
     httpCallDelete(pathToCall: string): Observable<any> {
-        return this.http.delete(environment.backEndurl + ':' + environment.backEndPort +'/'+ pathToCall, { headers: this.headers })
+        return this.http.delete(environment.backEndurl + ':' + environment.backEndPort +'/'+ pathToCall, { headers: this.headers, observe: 'response'})
             .pipe(
                 retry(3),
                 map(res => res),

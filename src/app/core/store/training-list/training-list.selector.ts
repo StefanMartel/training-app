@@ -1,7 +1,9 @@
 import { createSelector } from '@ngrx/store';
 
 // La première fonction amène vers le state todos
-export const selectTrainingListState = (state) => state.trainingReducer;
+export const selectTrainingListState = (state) => {
+    return state.reducers.training;
+}   
 
 // Et à partir de celle-ci, on créer une autre fonction qui renverra data
 export const selectTrainingById = createSelector(selectTrainingListState, 
