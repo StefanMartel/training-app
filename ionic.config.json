@@ -1,5 +1,7 @@
 {
   "name": "training",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

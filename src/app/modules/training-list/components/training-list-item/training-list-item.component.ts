@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { TrainingModel } from 'src/app/core/models/training.model';
+import { TrainingModel } from 'src/app/shared/models/training.model';
 
 @Component({
   selector: 'app-training-list-item',
@@ -18,7 +18,7 @@ export class TrainingListItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteTraining(trainingId: number){
+  deleteTraining(trainingId: number) {
     this.deleteTrainingId.emit(trainingId);
   }
 
