@@ -1,8 +1,8 @@
 export class ErrorResponse {
-    errorCode: string;
+    errorCode: number;
     errorDescription: string;
 
-    constructor(errorCode: string, errorDescription: string) {
+    constructor(errorCode: number, errorDescription: string) {
         this.errorCode = errorCode;
         this.errorDescription = errorDescription;
     }

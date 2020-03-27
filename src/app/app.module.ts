@@ -2,11 +2,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import  {BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -16,17 +16,17 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
-import { trainingReducer } from './core/store/training-list/training-list.reducer';
-import { reducers } from './core/store/reducers/index';
-import { TrainingListEffects } from './core/store/training-list/training-list.effects';
-import { HttpRepo } from './core/http/http';
+import { reducers } from './shared/store/reducers/index';
+import { TrainingListEffects } from './shared/store/training-list/training-list.effects';
+import { HttpRepo } from './shared/http/http';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 export function httpRepo (http: HttpClient) {
-  return new HttpRepo(http)
+  return new HttpRepo(http);
 }
 
 
@@ -56,7 +56,8 @@ export function httpRepo (http: HttpClient) {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HttpRepo, useFactory: (httpRepo), deps: [HttpClient]}
+    { provide: HttpRepo, useFactory: (httpRepo), deps: [HttpClient]},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

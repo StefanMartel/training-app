@@ -1,13 +1,13 @@
-import { AddTrainingAction, GetTrainingListAction } from './core/store/training-list/training-list.action';
+import { AddTrainingAction, GetTrainingListAction } from './shared/store/training-list/training-list.action';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Store } from '@ngrx/store';
-import { TrainingListMock } from './core/mocks/training-list.mocks';
-import { AddUserAction } from './core/store/user/user.action';
-import { UserMock } from './core/mocks/user.mocks';
+import { TrainingListMock } from './shared/mocks/training-list.mocks';
+import { AddUserAction } from './shared/store/user/user.action';
+import { UserMock } from './shared/mocks/user.mocks';
 
 @Component({
   selector: 'app-root',

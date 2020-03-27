@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { TrainingModel } from 'src/app/core/models/training.model';
-import { TrainingService } from 'src/app/core/services/training-list.service';
+import { TrainingModel } from 'src/app/shared/models/training.model';
+import { TrainingService } from 'src/app/shared/services/training-list.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmActionComponent } from 'src/app/shared/components/confirm-action/confirm-action.component';
@@ -19,7 +19,6 @@ export class TrainingListPage {
   deleteConfirm$ = new Subject();
 
   newTrainingCreating = false;
-  
   newTrainingValue: string;
 
   constructor(
@@ -28,39 +27,39 @@ export class TrainingListPage {
     private dialog: MatDialog,
     private translate: TranslateService
   ) {
-    this.trainingList$ = this.trainingService.getTrainingList();
+    this.trainingList$ = this.trainingService.getTrainingList$;
   }
 
   openAddTraining() {
     this.newTrainingCreating = true;
   }
 
-  closeAddTraining(){
+  closeAddTraining() {
     this.newTrainingCreating = false;
   }
 
   addTraining() {
-    if (this.newTrainingValue != '') {
+    if (this.newTrainingValue !== '') {
       this.trainingService.addTraining(this.newTrainingValue);
       this.clearNewValue();
       this.closeAddTraining();
     }
   }
 
-  clearNewValue(){
-    this.newTrainingValue='';
+  clearNewValue() {
+    this.newTrainingValue = '';
   }
 
-  deleteTraining(trainingId: number){
+  deleteTraining(trainingId: number) {
     this.deleteConfirm$.next(false);
-    this.openDialog();    
+    this.openDialog();
     this.deleteConfirm$.subscribe(
       data => {
-        if(data){
+        if (data) {
           this.trainingService.deleteTraining(trainingId);
         }
       }
-    )    
+    );
   }
 
   openDialog(): void {
@@ -70,7 +69,7 @@ export class TrainingListPage {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.deleteConfirm$.next(true);
       }
     });

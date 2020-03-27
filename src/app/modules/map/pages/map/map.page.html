@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+        {{'PAGE.TRAINING-LIST' | translate}}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <agm-map 
+      [zoom]=10 
+      [latitude]="points[0].latitude" 
+      [longitude]="points[0].longitude" 
+      (mapClick)="mapClicked($event)"
+      *ngIf="points.length>0">
+      <agm-marker *ngFor="let point of points" 
+          [latitude]="point.latitude" 
+          [longitude]="point.longitude"
+          [markerDraggable]=true
+          [openInfoWindow]=true
+          [animation]="'DROP'"></agm-marker>
+    </agm-map>
+  </ion-content>  

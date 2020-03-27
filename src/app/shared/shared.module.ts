@@ -12,6 +12,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatButtonModule} from '@angular/material/button';
 import { ConfirmActionComponent } from './components/confirm-action/confirm-action.component';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -29,7 +30,10 @@ import { ConfirmActionComponent } from './components/confirm-action/confirm-acti
         MatInputModule,
         MatDialogModule,
         MatSnackBarModule,
-        MatButtonModule
+        MatButtonModule,
+        AgmCoreModule.forRoot(
+          {apiKey: 'AIzaSyANKiSPp_Iyp-UFFsQxtKeV3D3BjT2vnC0'}
+        )
     ],
     exports: [
         CommonModule,
@@ -43,7 +47,8 @@ import { ConfirmActionComponent } from './components/confirm-action/confirm-acti
         MatInputModule,
         MatDialogModule,
         MatSnackBarModule,
-        MatButtonModule
+        MatButtonModule,
+        AgmCoreModule
     ],
     declarations: [ConfirmActionComponent],
     entryComponents: [ConfirmActionComponent]
@@ -53,6 +58,7 @@ export class SharedModule {
     constructor(private translate: TranslateService) {
         translate.addLangs(['en', 'fr']);
         translate.setDefaultLang('fr');
+        console.log('SHARED MODULE LOADED');
 
         const browserLang = translate.getBrowserLang();
         translate.use(browserLang.match(/en|fr/) ? browserLang : 'fr');

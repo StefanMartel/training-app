@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule } from '../../shared/shared.module';
+
 import { TrainingListPage } from './pages/training-list/training-list.page';
 import { TrainingListItemComponent } from './components/training-list-item/training-list-item.component';
-import { TrainingService } from 'src/app/core/services/training-list.service';
+import { TrainingService } from 'src/app/shared/services/training-list.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { TrainingService } from 'src/app/core/services/training-list.service';
     ])
   ],
   declarations: [
-    TrainingListPage, 
+    TrainingListPage,
     TrainingListItemComponent
   ],
   providers: [
